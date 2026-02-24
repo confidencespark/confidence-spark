@@ -351,7 +351,7 @@ export default function SignupScreen({navigation}) {
           <LinearGradient
             start={{x: 0, y: 0}}
             end={{x: 1, y: 1}}
-            colors={isValid ? ['#8EC6EA', '#234B67'] : ['#C9D7E1', '#C9D7E1']}
+            colors={isValid ? [COLORS.gradientStart, COLORS.gradientEnd] : [COLORS.gradientDisabledStart, COLORS.gradientDisabledEnd]}
             style={styles.button}>
             <Text style={styles.btnText}>
               {isLoading ? 'Please wait…' : 'Sign up'}
@@ -388,7 +388,7 @@ const R = DIMENSIONS.moderateScale(26);
 const INPUT_H = Math.max(DIMENSIONS.INPUT_HEIGHT, 54);
 
 const styles = StyleSheet.create({
-  safe: {flex: 1, backgroundColor: '#FFFFFF'},
+  safe: {flex: 1, backgroundColor: COLORS.background},
 
   skipContainer: {
     position: 'absolute',
@@ -409,9 +409,10 @@ const styles = StyleSheet.create({
 
   title: {
     fontSize: DIMENSIONS.FONT_SIZE_TITLE,
-    fontWeight: '800',
-    color: '#111827',
-    marginBottom: DIMENSIONS.verticalScale(12),
+    fontWeight: '600',
+    fontFamily: 'CormorantGaramond-SemiBold',
+    color: COLORS.text,
+    marginBottom: DIMENSIONS.verticalScale(16),
     marginTop: DIMENSIONS.verticalScale(8),
   },
 
@@ -421,16 +422,16 @@ const styles = StyleSheet.create({
     borderWidth: StyleSheet.hairlineWidth * 2,
     borderColor: '#E5E7EB',
     backgroundColor: '#FFFFFF',
-    marginBottom: DIMENSIONS.verticalScale(13),
+    marginBottom: DIMENSIONS.verticalScale(18),
     paddingHorizontal: DIMENSIONS.moderateScale(18),
     justifyContent: 'center',
   },
   inputWrapError: {
-    borderColor: '#DC2626', // red border on error
+    borderColor: COLORS.error,
   },
   input: {
     fontSize: DIMENSIONS.FONT_SIZE_LARGE,
-    color: '#111827',
+    color: COLORS.text,
     paddingVertical: Platform.OS === 'ios' ? 12 : 8,
   },
   eye: {
@@ -469,8 +470,8 @@ const styles = StyleSheet.create({
     marginBottom: DIMENSIONS.verticalScale(6),
   },
   footerLink: {
-    color: '#2E6C94',
-    fontWeight: '800',
+    color: COLORS.accent,
+    fontWeight: '600',
     fontSize: DIMENSIONS.FONT_SIZE_XLARGE,
   },
 });

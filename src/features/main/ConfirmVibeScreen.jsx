@@ -16,6 +16,7 @@ import {SafeAreaView, useSafeAreaInsets} from 'react-native-safe-area-context';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import LinearGradient from 'react-native-linear-gradient';
 import {DIMENSIONS} from '@constants/dimensions';
+import {COLORS} from '@constants/colors';
 import {navigate} from '@utils/NavigationUtils';
 import {useEditMoodMutation} from '@store/api/confidenceApi';
 import {getOrCreateDeviceId} from '@utils/deviceId';
@@ -29,22 +30,19 @@ const playful_hero = require('@assets/images/Playful_Loose.png');
 
 const THEMES = {
   calm: {
-    // tint: 'rgba(191, 230, 204, 0.88)',
-    accent: '#2E6C94',
+    accent: COLORS.accent,
     bg: calm_bg,
     hero: calm_hero,
     title: 'Calm & Grounded',
   },
   power: {
-    // tint: 'rgba(195, 225, 255, 0.9)',
-    accent: '#2E6C94',
+    accent: COLORS.accent,
     bg: pumped_bg,
     hero: pumped_hero,
     title: 'Pumped & Powerful',
   },
   playful: {
-    // tint: 'rgba(255, 205, 205, 0.9)',
-    accent: '#2E6C94',
+    accent: COLORS.accent,
     bg: playful_bg,
     hero: playful_hero,
     title: 'Playful & Loose',
@@ -66,8 +64,6 @@ export default function ConfirmVibeScreen({navigation, route}) {
   const [editMood, {isLoading}] = useEditMoodMutation();
 
   const moodKey = route?.params?.mood || 'calm';
-  const situationTitle = route?.params?.situationTitle || '';
-  const nextRoute = route?.params?.nextRoute || 'Lookup'; // change to your next screen
   const theme = THEMES[moodKey] || THEMES.calm;
 
   const onStart = async () => {
@@ -75,23 +71,12 @@ export default function ConfirmVibeScreen({navigation, route}) {
       const body = {
         device_id: await getOrCreateDeviceId(),
         mood: theme?.title,
-        // mood: '',
         confidence_id: 0,
       };
-      console.log('body', body);
 
       const res = await editMood(body).unwrap();
-      console.log('res', res);
 
-      navigate('Main', {
-        screen: 'LookupScreen',
-        //   params: {
-        //     title: item.title,
-        //     subtitle: item.sub,
-        //     image: item?.image,
-        //   },
-      });
-      // else navigate('Auth', {screen: 'SignInScreen'});
+      navigate('LookupScreen');
     } catch (error) {
       console.log(error);
     }
@@ -107,12 +92,7 @@ export default function ConfirmVibeScreen({navigation, route}) {
 
       {/* Patterned background + tint */}
       <ImageBackground source={theme.bg} style={StyleSheet.absoluteFill}>
-        <View
-          style={[
-            StyleSheet.absoluteFill,
-            // {backgroundColor: theme.tint}
-          ]}
-        />
+        <View style={StyleSheet.absoluteFill} />
       </ImageBackground>
 
       {/* Header: back pill */}
@@ -144,28 +124,15 @@ export default function ConfirmVibeScreen({navigation, route}) {
         }}>
         <Image source={theme.hero} style={styles.hero} />
 
-        {/* Title with accent like mock */}
+        {/* Title with accent */}
         <Text style={[styles.title, {color: theme.accent}]}>
-          {theme.title}{' '}
-          {/* <Text style={{color: '#2B6AA8'}}>& Grounded</Text> */}
+          {theme.title}
         </Text>
 
         <Text style={styles.subtitle}>
-          You’re all set. Let’s step into it.{'\n'}
+          You're all set. Let's step into it.{'\n'}
           Hit start and own the moment.
         </Text>
-
-        {/* <Pressable
-          onPress={onStart}
-          style={{marginTop: DIMENSIONS.verticalScale(8)}}>
-          <LinearGradient
-            start={{x: 0, y: 0}}
-            end={{x: 1, y: 1}}
-            colors={['#8EC6EA', '#234B67']}
-            style={styles.button}>
-            <Text style={styles.btnText}>Start</Text>
-          </LinearGradient>
-        </Pressable> */}
 
         <TouchableOpacity
           activeOpacity={0.9}
@@ -176,11 +143,13 @@ export default function ConfirmVibeScreen({navigation, route}) {
             start={{x: 0, y: 0}}
             end={{x: 1, y: 1}}
             colors={
-              !isLoading ? ['#8EC6EA', '#234B67'] : ['#C9D7E1', '#C9D7E1']
+              !isLoading
+                ? [COLORS.gradientStart, COLORS.gradientEnd]
+                : [COLORS.gradientDisabledStart, COLORS.gradientDisabledEnd]
             }
             style={styles.button}>
             <Text style={styles.btnText}>
-              {isLoading ? 'Please wait…' : 'Start'}
+              {isLoading ? 'Please wait\u2026' : 'Start'}
             </Text>
           </LinearGradient>
         </TouchableOpacity>
@@ -191,7 +160,7 @@ export default function ConfirmVibeScreen({navigation, route}) {
 
 const HERO = DIMENSIONS.moderateScale(230);
 const styles = StyleSheet.create({
-  safe: {flex: 1, backgroundColor: '#FFFFFF'},
+  safe: {flex: 1, backgroundColor: COLORS.background},
 
   header: {
     paddingHorizontal: DIMENSIONS.PADDING_HORIZONTAL,
@@ -211,8 +180,7 @@ const styles = StyleSheet.create({
     borderRadius: DIMENSIONS.moderateScale(14),
     marginTop: DIMENSIONS.verticalScale(16),
     marginBottom: DIMENSIONS.verticalScale(22),
-    // soft depth
-    shadowColor: '#000',
+    shadowColor: COLORS.black,
     shadowOpacity: 0.12,
     shadowRadius: 10,
     shadowOffset: {width: 0, height: 6},
@@ -220,17 +188,18 @@ const styles = StyleSheet.create({
   },
 
   title: {
-    fontSize: DIMENSIONS.moderateScale(30),
-    lineHeight: DIMENSIONS.moderateScale(36),
-    fontWeight: '800',
+    fontSize: DIMENSIONS.moderateScale(32),
+    lineHeight: DIMENSIONS.moderateScale(40),
+    fontWeight: '600',
+    fontFamily: 'CormorantGaramond-SemiBold',
     textAlign: 'center',
     marginTop: DIMENSIONS.verticalScale(30),
     marginBottom: DIMENSIONS.verticalScale(30),
   },
   subtitle: {
     textAlign: 'center',
-    color: '#2B2B2B',
-    fontWeight: '700',
+    color: COLORS.secondary,
+    fontWeight: '500',
     fontSize: DIMENSIONS.FONT_SIZE_MEDIUM,
     lineHeight: DIMENSIONS.FONT_SIZE_MEDIUM * 1.5,
     marginBottom: DIMENSIONS.verticalScale(30),
@@ -244,8 +213,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   btnText: {
-    color: '#FFFFFF',
-    fontWeight: '800',
+    color: COLORS.white,
+    fontWeight: '600',
     fontSize: DIMENSIONS.FONT_SIZE_XLARGE,
   },
 });

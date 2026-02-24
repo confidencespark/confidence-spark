@@ -1,10 +1,11 @@
 import {Dimensions} from 'react-native';
+import {COLORS} from '@constants/colors';
 
 /**
  * Unistyles Constants
  *
  * Defines global constants for screen dimensions, colors, and fonts used within the Unistyles theme.
- * Acts as the single source of truth for design tokens.
+ * Colors are imported from the single source of truth: @constants/colors.
  */
 export const BOTTOM_TAB_HEIGHT = 90;
 export const screenHeight = Dimensions.get('screen').height;
@@ -12,18 +13,18 @@ export const screenWidth = Dimensions.get('screen').width;
 export const isBannerHeight = screenHeight * 0.4;
 
 export const Colors = {
-  primary: '#E23744',
-  primary_light: '#EF4F5F',
-  text: '#222',
-  active_light: '#ECFAF1',
-  secondary: '#2D2D2D',
-  tertiary: '#F4F4F2',
-  background: '#fff',
-  background_light: '#F4F6FC',
-  border: '#E5E9EF',
-  lightText: '#9197A6',
-  active: '#019A51',
-  dark: '#18171C',
+  primary: COLORS.primary,
+  primary_light: COLORS.primary_light,
+  text: COLORS.text,
+  active_light: COLORS.active_light,
+  secondary: COLORS.secondary,
+  tertiary: COLORS.tertiary,
+  background: COLORS.background,
+  background_light: COLORS.background_light,
+  border: COLORS.borderCard,
+  lightText: COLORS.lightText,
+  active: COLORS.active,
+  dark: COLORS.dark,
 };
 
 export enum Fonts {
@@ -32,6 +33,10 @@ export enum Fonts {
   Light = 'Okra-MediumLight',
   SemiBold = 'Okra-Bold',
   Bold = 'Okra-ExtraBold',
+  HeadingMedium = 'CormorantGaramond-Medium',
+  HeadingRegular = 'CormorantGaramond-Regular',
+  HeadingSemiBold = 'CormorantGaramond-SemiBold',
+  HeadingBold = 'CormorantGaramond-Bold',
 }
 
 export const lightColors = [

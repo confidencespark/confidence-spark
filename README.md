@@ -1,4 +1,4 @@
-# Taking Your Stage (Confidence Catalyst)
+# Confidence Spark
 
 ## 1. Project Overview
 

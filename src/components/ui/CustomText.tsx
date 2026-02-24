@@ -1,4 +1,4 @@
-import {Colors} from '@unistyles/Constants';
+import {Colors, Fonts} from '@unistyles/Constants';
 import {Platform, StyleSheet, Text, TextStyle} from 'react-native';
 import {RFValue} from 'react-native-responsive-fontsize';
 
@@ -12,7 +12,11 @@ interface CustomTextProps {
     | 'Okra-Regular'
     | 'Okra-Black'
     | 'Okra-Light'
-    | 'Okra-Medium';
+    | 'Okra-Medium'
+    | 'CormorantGaramond-Regular'
+    | 'CormorantGaramond-Medium'
+    | 'CormorantGaramond-SemiBold'
+    | 'CormorantGaramond-Bold';
   fontSize?: number;
   color?: string;
   style?: TextStyle | TextStyle[];
@@ -52,15 +56,23 @@ const fontSizeMap: Record<Variant, Record<PlatformType, number>> = {
   },
 };
 
+// Heading variants default to Cormorant Garamond
+const headingFontMap: Record<string, string> = {
+  h1: Fonts.HeadingBold,
+  h2: Fonts.HeadingSemiBold,
+  h3: Fonts.HeadingMedium,
+};
+
 /**
  * Custom Typography Component
  *
  * Renders text using the App's custom fonts (Okra/Cormorant).
- * Handles responsive font sizing via `RFValue` and `variant` props (h1-h7).
+ * h1-h3 default to Cormorant Garamond for calm/premium headings.
+ * h4-h7 default to Okra-Regular for body text.
  */
 const CustomText: React.FC<CustomTextProps> = ({
   variant,
-  fontFamily = 'Okra-Regular',
+  fontFamily,
   fontSize,
   color,
   style,
@@ -79,8 +91,14 @@ const CustomText: React.FC<CustomTextProps> = ({
     computedFontSize = RFValue(fontSize || defaultSize);
   }
 
+  // Default font: use Cormorant for h1-h3, Okra-Regular otherwise
+  const resolvedFontFamily =
+    fontFamily ||
+    (variant && headingFontMap[variant]) ||
+    'Okra-Regular';
+
   const fontFamilyStyle = {
-    fontFamily,
+    fontFamily: resolvedFontFamily,
   };
 
   return (

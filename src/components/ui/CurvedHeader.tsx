@@ -35,7 +35,7 @@ const CurvedBackground = ({text}) => {
       <LinearGradient
         start={{x: 0, y: 0}}
         end={{x: 1, y: 1}}
-        colors={['#87C1E9', '#123D5C']}
+        colors={[COLORS.gradientStart, COLORS.gradientEnd]}
         style={StyleSheet.absoluteFillObject}
       />
       {text ? (
@@ -59,7 +59,7 @@ const CurvedBackground = ({text}) => {
         preserveAspectRatio="none"
         pointerEvents="none">
         <G transform="translate(0,120) scale(1,-1)">
-          <Path fill="#FFFFFF" d="M0,70 C110,130 240,20 375,90 L375,0 L0,0 Z" />
+          <Path fill={COLORS.background} d="M0,70 C110,130 240,20 375,90 L375,0 L0,0 Z" />
         </G>
       </Svg>
     </View>
@@ -69,7 +69,8 @@ const CurvedBackground = ({text}) => {
 const styles = StyleSheet.create({
   title: {
     fontSize: DIMENSIONS.FONT_SIZE_TITLE,
-    fontWeight: '800',
+    fontWeight: '600',
+    fontFamily: 'CormorantGaramond-SemiBold',
     color: COLORS.white,
     marginTop: DIMENSIONS.verticalScale(6),
   },

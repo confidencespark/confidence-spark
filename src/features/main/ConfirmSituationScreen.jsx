@@ -15,6 +15,7 @@ import {SafeAreaView, useSafeAreaInsets} from 'react-native-safe-area-context';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import LinearGradient from 'react-native-linear-gradient';
 import {DIMENSIONS} from '@constants/dimensions';
+import {COLORS} from '@constants/colors';
 import {navigate} from '@utils/NavigationUtils';
 import {useEditSituationMutation} from '@store/api/confidenceApi';
 import {getOrCreateDeviceId} from '@utils/deviceId';
@@ -36,37 +37,25 @@ export default function ConfirmSituationScreen({navigation, route}) {
 
   const {
     title = 'Interview',
-    subtitle = 'You’re not here to impress.\nyou’re here to connect.',
+    subtitle = "You\u2019re not here to impress.\nYou\u2019re here to connect.",
     image = {
       uri: 'https://images.unsplash.com/photo-1521119989659-a83eee488004?q=80&w=800&auto=format&fit=crop',
     },
   } = route?.params || {};
-  console.log(route?.params);
 
   const onProceed = async () => {
-    // if this lives under Main stack:
-    // navigation.navigate('Main', {screen: 'MoodSelectScreen', params: {situationTitle: title}});
-    // navigation.navigate('MoodSelect', {situationTitle: title});
-
     try {
       const body = {
         device_id: await getOrCreateDeviceId(),
         situation: route?.params?.title,
-        // mood: '',
         confidence_id: 0,
       };
-      // console.log('body', body);
 
       const res = await editSituation(body).unwrap();
-      // console.log('res', res);
 
-      navigate('Main', {
-        screen: 'MoodSelectScreen',
-        params: {
-          ...(route?.params || {}),
-        },
+      navigate('MoodSelectScreen', {
+        ...(route?.params || {}),
       });
-      // else navigate('Auth', {screen: 'SignInScreen'});
     } catch (error) {
       console.log(error);
     }
@@ -93,7 +82,7 @@ export default function ConfirmSituationScreen({navigation, route}) {
             styles.backBtn,
             pressed && Platform.OS === 'ios' ? {opacity: 0.7} : null,
           ]}>
-          <Ionicons name="chevron-back" size={22} color="#2E6C94" />
+          <Ionicons name="chevron-back" size={22} color={COLORS.accent} />
         </Pressable>
       </View>
 
@@ -109,33 +98,22 @@ export default function ConfirmSituationScreen({navigation, route}) {
 
           <Text style={styles.subtitle}>{subtitle}</Text>
 
-          <Text style={styles.helper}>
-            Click on proceed below to{'\n'}select the vibe
-          </Text>
-
-          {/* <Pressable onPress={onProceed} style={styles.btnWrap}>
-            <LinearGradient
-              start={{x: 0, y: 0}}
-              end={{x: 1, y: 1}}
-              colors={['#8EC6EA', '#234B67']}
-              style={styles.button}>
-              <Text style={styles.btnText}>Proceed</Text>
-            </LinearGradient>
-          </Pressable> */}
           <TouchableOpacity
             activeOpacity={0.9}
             onPress={onProceed}
             disabled={isLoading}
-            style={{marginTop: DIMENSIONS.verticalScale(18)}}>
+            style={{marginTop: DIMENSIONS.verticalScale(24)}}>
             <LinearGradient
               start={{x: 0, y: 0}}
               end={{x: 1, y: 1}}
               colors={
-                !isLoading ? ['#8EC6EA', '#234B67'] : ['#C9D7E1', '#C9D7E1']
+                !isLoading
+                  ? [COLORS.gradientStart, COLORS.gradientEnd]
+                  : [COLORS.gradientDisabledStart, COLORS.gradientDisabledEnd]
               }
               style={styles.button}>
               <Text style={styles.btnText}>
-                {isLoading ? 'Please wait…' : 'Proceed'}
+                {isLoading ? 'Please wait\u2026' : 'Proceed'}
               </Text>
             </LinearGradient>
           </TouchableOpacity>
@@ -145,10 +123,10 @@ export default function ConfirmSituationScreen({navigation, route}) {
   );
 }
 
-const MAX_W = 380; // keep column width like your mock on larger phones
-const HERO = DIMENSIONS.moderateScale(280); // bigger image
+const MAX_W = 380;
+const HERO = DIMENSIONS.moderateScale(280);
 const styles = StyleSheet.create({
-  safe: {flex: 1, backgroundColor: '#FFFFFF'},
+  safe: {flex: 1, backgroundColor: COLORS.background},
 
   header: {
     paddingHorizontal: DIMENSIONS.PADDING_HORIZONTAL,
@@ -157,7 +135,7 @@ const styles = StyleSheet.create({
     width: DIMENSIONS.moderateScale(40),
     height: DIMENSIONS.moderateScale(40),
     borderRadius: DIMENSIONS.moderateScale(20),
-    backgroundColor: '#EAF2F9',
+    backgroundColor: COLORS.iconBgAlt,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -172,51 +150,43 @@ const styles = StyleSheet.create({
     width: '100%',
     maxWidth: MAX_W,
     alignItems: 'center',
-    // spacing tuned to screenshot
-    paddingTop: DIMENSIONS.verticalScale(22), // big top white space
+    paddingTop: DIMENSIONS.verticalScale(22),
   },
 
   hero: {
     width: HERO,
     height: HERO,
     borderRadius: DIMENSIONS.moderateScale(12),
-    marginBottom: DIMENSIONS.verticalScale(22), // space before title
+    marginBottom: DIMENSIONS.verticalScale(26),
   },
 
   title: {
-    fontSize: DIMENSIONS.moderateScale(28),
-    lineHeight: DIMENSIONS.moderateScale(34),
-    fontWeight: '800',
-    color: '#2E6C94',
-    marginBottom: DIMENSIONS.verticalScale(14), // space before subtitle
+    fontSize: DIMENSIONS.moderateScale(30),
+    lineHeight: DIMENSIONS.moderateScale(38),
+    fontWeight: '600',
+    fontFamily: 'CormorantGaramond-SemiBold',
+    color: COLORS.accent,
+    marginBottom: DIMENSIONS.verticalScale(16),
   },
   subtitle: {
     textAlign: 'center',
-    color: '#2B2B2B',
-    fontWeight: '600',
+    color: COLORS.secondary,
+    fontWeight: '500',
     fontSize: DIMENSIONS.FONT_SIZE_MEDIUM,
-    lineHeight: DIMENSIONS.FONT_SIZE_MEDIUM * 1.45,
-    marginBottom: DIMENSIONS.verticalScale(36), // larger gap like mock
-  },
-  helper: {
-    textAlign: 'center',
-    color: '#A6AFB7', // lighter gray
-    fontSize: DIMENSIONS.FONT_SIZE_MEDIUM,
-    marginBottom: DIMENSIONS.verticalScale(14),
-    marginTop: DIMENSIONS.verticalScale(14),
+    lineHeight: DIMENSIONS.FONT_SIZE_MEDIUM * 1.55,
+    marginBottom: DIMENSIONS.verticalScale(36),
   },
 
-  btnWrap: {alignSelf: 'center'},
   button: {
-    height: DIMENSIONS.BUTTON_HEIGHT, // compact pill
-    width: Math.min(DIMENSIONS.SCREEN_WIDTH * 0.58, 260), // smaller width like mock
+    height: DIMENSIONS.BUTTON_HEIGHT,
+    width: Math.min(DIMENSIONS.SCREEN_WIDTH * 0.58, 260),
     borderRadius: DIMENSIONS.moderateScale(30),
     alignItems: 'center',
     justifyContent: 'center',
   },
   btnText: {
-    color: '#FFFFFF',
-    fontWeight: '800',
+    color: COLORS.white,
+    fontWeight: '600',
     fontSize: DIMENSIONS.FONT_SIZE_XLARGE,
   },
 });

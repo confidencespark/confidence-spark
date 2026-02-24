@@ -5,9 +5,11 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 // import LinearGradient from 'react-native-linear-gradient'; // if you want gradient bg
 
+import {getFocusedRouteNameFromRoute} from '@react-navigation/native';
 import Icon from '@components/global/Icon'; // must forward the `color` prop!
 import {DIMENSIONS} from '@constants/dimensions';
-import HomeScreen from '@features/main/home/HomeScreen';
+import {COLORS} from '@constants/colors';
+import HomeStackNavigator from '@navigation/HomeStackNavigator';
 import ProfileScreen from '@features/profile/ProfileScreen';
 import {navigate, resetAndNavigate} from '@utils/NavigationUtils';
 import {logout} from '@store/slices/authSlice';
@@ -18,10 +20,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {STORAGE_KEYS} from '@constants/storageKeys';
 
 const Tab = createBottomTabNavigator();
-
-const BLUE = '#73A9C9'; // bar bg (like your mock)
-const ACTIVE = '#0E3753'; // focused label/icon (dark navy)
-const INACT = '#FFFFFF'; // inactive label/icon (white)
 
 const Empty = () => null; // used if you want Logout to be an action, not a screen
 
@@ -49,8 +47,8 @@ export default function UserBottomTab() {
         tabBarHideOnKeyboard: true,
 
         // Let RN Navigation drive colors
-        tabBarActiveTintColor: ACTIVE,
-        tabBarInactiveTintColor: INACT,
+        tabBarActiveTintColor: COLORS.tabActive,
+        tabBarInactiveTintColor: COLORS.tabInactive,
 
         tabBarLabelStyle: {
           fontWeight: '500',
@@ -60,7 +58,7 @@ export default function UserBottomTab() {
           paddingVertical: DIMENSIONS.verticalScale(6),
         },
         tabBarStyle: {
-          backgroundColor: BLUE,
+          backgroundColor: COLORS.tabBar,
           borderTopWidth: 0,
           height: DIMENSIONS.verticalScale(72),
           // paddingTop: DIMENSIONS.verticalScale(2),
@@ -79,17 +77,30 @@ export default function UserBottomTab() {
       }}>
       <Tab.Screen
         name="Home"
-        component={HomeScreen}
-        options={{
-          tabBarIcon: ({color, focused, size}) => (
-            <Icon
-              name={focused ? 'home' : 'home-outline'}
-              iconFamily="Ionicons"
-              size={25}
-              color={color} // <- IMPORTANT: use the provided color
-            />
-          ),
-          tabBarLabel: 'Home',
+        component={HomeStackNavigator}
+        options={({route}) => {
+          const routeName = getFocusedRouteNameFromRoute(route) ?? 'HomeScreen';
+          const hideOnScreens = ['StepFlowScreen'];
+          return {
+            tabBarIcon: ({color, focused, size}) => (
+              <Icon
+                name={focused ? 'home' : 'home-outline'}
+                iconFamily="Ionicons"
+                size={25}
+                color={color}
+              />
+            ),
+            tabBarLabel: 'Home',
+            tabBarStyle: hideOnScreens.includes(routeName)
+              ? {display: 'none'}
+              : {
+                  backgroundColor: COLORS.tabBar,
+                  borderTopWidth: 0,
+                  height: DIMENSIONS.verticalScale(72),
+                  paddingBottom: bottom + DIMENSIONS.verticalScale(10),
+                  elevation: 8,
+                },
+          };
         }}
       />
 

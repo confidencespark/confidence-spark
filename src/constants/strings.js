@@ -6,12 +6,12 @@
  */
 export const STRINGS = {
   // App name
-  APP_NAME: 'The Confidence Catalyst',
+  APP_NAME: 'Confidence Spark',
 
   // Onboarding
   CONFIDENCE_ON_DEMAND: 'Your Confidence On Demand',
   WELCOME_MESSAGE:
-    'Welcome to The Confidence Spark. \n your go to boost before big moments.',
+    'Welcome to Confidence Spark. \n Your go-to boost before big moments.',
   PICK_VIBE_MESSAGE:
     'Pick your vibe, own your energy, and walk in like the main character you are.',
   GET_STARTED: 'Get Started',
@@ -54,7 +54,7 @@ export const STRINGS = {
   PLAYFUL_LOOSE: 'Playful & Loose',
 
   // Steps
-  HERES_YOUR_CATALYST: "Here's Your Confidence Catalyst",
+  HERES_YOUR_CATALYST: "Here's Your Confidence Spark",
   LET_THEM_SEE_YOU: "Let Them See You | I've earned my seat here.",
 
   // Situations

@@ -245,8 +245,8 @@ export default function OtpScreen({navigation, route}) {
             end={{x: 1, y: 1}}
             colors={
               isValid && !reSendIsLoading
-                ? ['#8EC6EA', '#234B67']
-                : ['#C9D7E1', '#C9D7E1']
+                ? [COLORS.gradientStart, COLORS.gradientEnd]
+                : [COLORS.gradientDisabledStart, COLORS.gradientDisabledEnd]
             }
             style={styles.button}>
             <Text style={styles.btnText}>
@@ -272,12 +272,13 @@ const R = DIMENSIONS.moderateScale(26);
 const INPUT_H = Math.max(DIMENSIONS.INPUT_HEIGHT, 54);
 
 const styles = StyleSheet.create({
-  safe: {flex: 1, backgroundColor: '#FFFFFF'},
+  safe: {flex: 1, backgroundColor: COLORS.background},
 
   title: {
     fontSize: DIMENSIONS.FONT_SIZE_TITLE,
-    fontWeight: '800',
-    color: '#111827',
+    fontWeight: '600',
+    fontFamily: 'CormorantGaramond-SemiBold',
+    color: COLORS.text,
     marginTop: DIMENSIONS.verticalScale(6),
   },
   subTitle: {
@@ -292,21 +293,21 @@ const styles = StyleSheet.create({
     borderRadius: R,
     borderWidth: StyleSheet.hairlineWidth * 2,
     borderColor: '#E5E7EB',
-    backgroundColor: '#FFFFFF',
-    marginBottom: DIMENSIONS.verticalScale(13),
+    backgroundColor: COLORS.background,
+    marginBottom: DIMENSIONS.verticalScale(18),
     paddingHorizontal: DIMENSIONS.moderateScale(18),
     justifyContent: 'center',
   },
   inputWrapError: {
-    borderColor: '#DC2626', // red border on error
+    borderColor: COLORS.error, // red border on error
   },
   input: {
     fontSize: DIMENSIONS.FONT_SIZE_LARGE,
-    color: '#111827',
+    color: COLORS.text,
     paddingVertical: Platform.OS === 'ios' ? 12 : 8,
   },
   err: {
-    color: '#DC2626',
+    color: COLORS.error,
     fontSize: DIMENSIONS.FONT_SIZE_SMALL,
     marginTop: DIMENSIONS.verticalScale(-10),
     marginBottom: DIMENSIONS.verticalScale(12),
@@ -320,15 +321,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   btnText: {
-    color: '#FFFFFF',
+    color: COLORS.background,
     fontSize: DIMENSIONS.FONT_SIZE_XLARGE,
     fontWeight: '700',
   },
 
   backWrap: {alignItems: 'center', marginTop: DIMENSIONS.verticalScale(14)},
   backLink: {
-    color: '#2E6C94',
-    fontWeight: '800',
+    color: COLORS.accent,
+    fontWeight: '600',
+    fontFamily: 'CormorantGaramond-SemiBold',
     fontSize: DIMENSIONS.FONT_SIZE_XLARGE,
   },
   resendContainer: {
@@ -336,8 +338,9 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   resendText: {
-    fontWeight: '800',
+    fontWeight: '600',
+    fontFamily: 'CormorantGaramond-SemiBold',
     fontSize: DIMENSIONS.FONT_SIZE_MEDIUM,
-    color: '#2E6C94',
+    color: COLORS.accent,
   },
 });

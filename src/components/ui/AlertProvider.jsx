@@ -301,12 +301,10 @@ const styles = StyleSheet.create({
     // borderWidth: 2,
   },
   title: {
-    // flex: 1,
     color: '#111827',
-    fontWeight: '800',
+    fontWeight: '600',
     fontSize: DIMENSIONS.FONT_SIZE_XLARGE,
     alignItems: 'center',
-    // borderWidth: 2,
   },
   message: {
     color: '#4B5563',

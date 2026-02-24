@@ -18,6 +18,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import LinearGradient from 'react-native-linear-gradient';
 import AudioRecorderPlayer from 'react-native-audio-recorder-player';
 import {DIMENSIONS} from '@constants/dimensions';
+import {COLORS} from '@constants/colors';
 import {resetAndNavigate} from '@utils/NavigationUtils';
 
 // ------- assets -------
@@ -244,7 +245,7 @@ export default function StepFlowScreen({navigation, route}) {
   const onNext = async () => {
     if (isLast) {
       await stopAndRelease();
-      if (finishRoute?.name) resetAndNavigate('UserBottomTab');
+      if (finishRoute?.name) navigation.popToTop();
       else navigation.goBack();
       return;
     }
@@ -347,7 +348,7 @@ export default function StepFlowScreen({navigation, route}) {
           onPress={onBack}
           style={[styles.backBtnAbs, {top: insets.top + 8}]}
           hitSlop={12}>
-          <Ionicons name="chevron-back" size={22} color="#2E6C94" />
+          <Ionicons name="chevron-back" size={22} color={COLORS.accent} />
         </Pressable>
         <View style={[StyleSheet.absoluteFill, styles.heroCenterAbs]}>
           <Text style={styles.heroTitle}>{situationTitle}</Text>
@@ -375,7 +376,7 @@ export default function StepFlowScreen({navigation, route}) {
                 (isLoadingAudio ? (
                   <Pressable style={styles.playWrap} disabled>
                     <LinearGradient
-                      colors={['#8EC6EA', '#234B67']}
+                      colors={[COLORS.gradientStart, COLORS.gradientEnd]}
                       start={{x: 0, y: 0}}
                       end={{x: 1, y: 1}}
                       style={styles.playBtn}>
@@ -385,7 +386,7 @@ export default function StepFlowScreen({navigation, route}) {
                 ) : (
                   <Pressable style={styles.playWrap} onPress={togglePlay}>
                     <LinearGradient
-                      colors={['#8EC6EA', '#234B67']}
+                      colors={[COLORS.gradientStart, COLORS.gradientEnd]}
                       start={{x: 0, y: 0}}
                       end={{x: 1, y: 1}}
                       style={styles.playBtn}>
@@ -403,7 +404,7 @@ export default function StepFlowScreen({navigation, route}) {
                 onPress={onNext}
                 style={{marginTop: DIMENSIONS.verticalScale(30)}}>
                 <LinearGradient
-                  colors={['#8EC6EA', '#234B67']}
+                  colors={[COLORS.gradientStart, COLORS.gradientEnd]}
                   start={{x: 0, y: 0}}
                   end={{x: 1, y: 1}}
                   style={styles.cta}>
@@ -433,7 +434,7 @@ const HERO_H = DIMENSIONS.verticalScale(260);
 const CARD_R = DIMENSIONS.moderateScale(26);
 
 const styles = StyleSheet.create({
-  safe: {flex: 1, backgroundColor: '#FFFFFF'},
+  safe: {flex: 1, backgroundColor: COLORS.background},
 
   /* HERO */
   heroContainer: {width: SCREEN_WIDTH, height: HERO_H},
@@ -460,10 +461,11 @@ const styles = StyleSheet.create({
     paddingBottom: DIMENSIONS.verticalScale(18),
   },
   heroTitle: {
-    color: '#FFFFFF',
-    fontWeight: '800',
-    fontSize: DIMENSIONS.moderateScale(28),
-    lineHeight: DIMENSIONS.moderateScale(32),
+    color: COLORS.white,
+    fontWeight: '600',
+    fontFamily: 'CormorantGaramond-SemiBold',
+    fontSize: DIMENSIONS.moderateScale(30),
+    lineHeight: DIMENSIONS.moderateScale(36),
     textAlign: 'center',
     textShadowColor: 'rgba(0,0,0,0.35)',
     textShadowRadius: 6,
@@ -478,29 +480,31 @@ const styles = StyleSheet.create({
   },
   cardInner: {
     flex: 1,
-    paddingTop: DIMENSIONS.verticalScale(25),
-    paddingHorizontal: DIMENSIONS.PADDING_HORIZONTAL,
+    paddingTop: DIMENSIONS.verticalScale(30),
+    paddingHorizontal: DIMENSIONS.PADDING_HORIZONTAL + 4,
     alignItems: 'center',
-    rowGap: 10,
+    rowGap: 14,
   },
   stepIndex: {
-    color: '#2B6AA8',
-    fontWeight: '800',
+    color: COLORS.accentLight,
+    fontWeight: '600',
     fontSize: DIMENSIONS.FONT_SIZE_MEDIUM,
     marginBottom: DIMENSIONS.verticalScale(6),
   },
   stepTitle: {
-    color: '#2E6C94',
-    fontWeight: '800',
-    fontSize: DIMENSIONS.moderateScale(20),
-    marginBottom: DIMENSIONS.verticalScale(6),
+    color: COLORS.accent,
+    fontWeight: '600',
+    fontFamily: 'CormorantGaramond-SemiBold',
+    fontSize: DIMENSIONS.moderateScale(22),
+    marginBottom: DIMENSIONS.verticalScale(8),
   },
   stepText: {
-    color: '#111827',
-    fontWeight: '800',
-    fontSize: DIMENSIONS.moderateScale(18),
+    color: COLORS.text,
+    fontWeight: '500',
+    fontSize: DIMENSIONS.moderateScale(17),
     textAlign: 'center',
-    marginBottom: DIMENSIONS.verticalScale(18),
+    lineHeight: DIMENSIONS.moderateScale(26),
+    marginBottom: DIMENSIONS.verticalScale(20),
   },
   playWrap: {marginBottom: DIMENSIONS.verticalScale(12)},
   playBtn: {
@@ -524,8 +528,8 @@ const styles = StyleSheet.create({
     marginBottom: DIMENSIONS.verticalScale(18),
   },
   ctaText: {
-    color: '#FFFFFF',
-    fontWeight: '800',
+    color: COLORS.white,
+    fontWeight: '600',
     fontSize: DIMENSIONS.FONT_SIZE_XLARGE,
   },
 

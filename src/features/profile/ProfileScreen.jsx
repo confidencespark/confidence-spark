@@ -24,6 +24,7 @@ import {
 } from '@store/api/authApi';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {STORAGE_KEYS} from '../../constants/storageKeys';
+import {COLORS as APP_COLORS} from '@constants/colors';
 
 /**
  * Profile Screen
@@ -183,7 +184,7 @@ export default function ProfileScreen() {
               name="logout"
               iconFamily="MaterialIcons"
               size={26}
-              color={'#2F7CC0'}
+              color={APP_COLORS.accent}
             />
             <Text style={styles.linkText}>Logout</Text>
           </Pressable>
@@ -196,7 +197,7 @@ export default function ProfileScreen() {
               name="delete-outline"
               iconFamily="MaterialIcons"
               size={26}
-              color={'#DC2626'}
+              color={APP_COLORS.error}
             />
             <Text style={styles.deleteText}>Delete Account</Text>
           </Pressable>
@@ -293,13 +294,13 @@ function AlertIcon() {
 /* ---------------- Styles ---------------- */
 
 const COLORS = {
-  bg: '#F9FAFB',
-  card: '#FFFFFF',
-  text: '#111827',
-  subtext: '#6B7280',
-  border: '#E5E7EB',
-  primary: '#2F7CC0',
-  danger: '#DC2626',
+  bg: APP_COLORS.surfaceAlt,
+  card: APP_COLORS.card,
+  text: APP_COLORS.text,
+  subtext: APP_COLORS.textSecondary,
+  border: APP_COLORS.border,
+  primary: APP_COLORS.accent,
+  danger: APP_COLORS.error,
 };
 
 const styles = StyleSheet.create({
@@ -323,7 +324,8 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     fontSize: 22,
-    fontWeight: '700',
+    fontWeight: '600',
+    fontFamily: 'CormorantGaramond-SemiBold',
     color: COLORS.text,
     marginLeft: 4,
   },
@@ -393,7 +395,7 @@ const styles = StyleSheet.create({
   },
   modalTitle: {
     fontSize: 18,
-    fontWeight: '800',
+    fontWeight: '600',
     color: COLORS.text,
     textAlign: 'center',
   },

@@ -14,8 +14,8 @@ import {SafeAreaView, useSafeAreaInsets} from 'react-native-safe-area-context';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import {DIMENSIONS} from '@constants/dimensions';
+import {COLORS} from '@constants/colors';
 import {navigate} from '@utils/NavigationUtils';
-// import {COLORS} from '@constants/colors';
 
 const calm_hero = require('@assets/images/Calm_Grounded.png');
 const pumped_hero = require('@assets/images/Pumped_Powerful.png');
@@ -25,19 +25,19 @@ const MOODS = [
   {
     key: 'calm',
     title: 'Calm & Grounded',
-    bg: '#CFEAD4',
+    bg: COLORS.calm,
     image: calm_hero,
   },
   {
     key: 'power',
     title: 'Pumped & Powerful',
-    bg: '#BFE3FF',
+    bg: COLORS.powerful,
     image: pumped_hero,
   },
   {
     key: 'playful',
     title: 'Playful & Loose',
-    bg: '#FFC9C9',
+    bg: COLORS.playful,
     image: playful_hero,
   },
 ];
@@ -61,21 +61,13 @@ export default function MoodSelectScreen({navigation, route}) {
   const frozenBottom = React.useRef(insets.bottom || 0).current;
 
   const {situationTitle = 'Test', title} = route?.params;
-  // const situationTitle = route?.params?.situationTitle || 'your Moment'; // e.g. "your Pitch"
 
   const onPick = mood => {
-    navigate('Main', {
-      screen: 'ConfirmVibeScreen',
-      params: {
-        mood: mood.key,
-        situationTitle,
-      },
+    navigate('ConfirmVibeScreen', {
+      mood: mood.key,
+      situationTitle,
     });
   };
-  // navigation?.navigate?.('ConfirmVibe', {
-  //   mood: mood.key,
-  //   situationTitle,
-  // });
 
   return (
     <SafeAreaView style={styles.safe} edges={['left', 'right', 'bottom']}>
@@ -98,14 +90,11 @@ export default function MoodSelectScreen({navigation, route}) {
             styles.backBtn,
             pressed && Platform.OS === 'ios' ? {opacity: 0.7} : null,
           ]}>
-          <Ionicons name="chevron-back" size={22} color="#2E6C94" />
+          <Ionicons name="chevron-back" size={22} color={COLORS.accent} />
         </Pressable>
 
         <Text style={styles.heading}>
           How do you want to feel walking into your {title}
-          {/* <Text style={{color: '#2E6C94', fontWeight: '800'}}>
-            {situationTitle}
-          </Text> */}
         </Text>
       </View>
 
@@ -137,13 +126,13 @@ export default function MoodSelectScreen({navigation, route}) {
   );
 }
 
-const CARD_H = DIMENSIONS.verticalScale(92);
+const CARD_H = DIMENSIONS.verticalScale(110);
 const R = DIMENSIONS.moderateScale(22);
 
 const styles = StyleSheet.create({
   safe: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: COLORS.background,
     padding: DIMENSIONS.MARGIN_SMALL,
   },
 
@@ -155,16 +144,17 @@ const styles = StyleSheet.create({
     width: DIMENSIONS.moderateScale(40),
     height: DIMENSIONS.moderateScale(40),
     borderRadius: DIMENSIONS.moderateScale(20),
-    backgroundColor: '#EAF2F9',
+    backgroundColor: COLORS.iconBgAlt,
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: DIMENSIONS.verticalScale(10),
   },
   heading: {
     fontSize: DIMENSIONS.moderateScale(28),
-    lineHeight: DIMENSIONS.moderateScale(34),
-    fontWeight: '800',
-    color: '#2E6C94',
+    lineHeight: DIMENSIONS.moderateScale(36),
+    fontWeight: '600',
+    fontFamily: 'CormorantGaramond-SemiBold',
+    color: COLORS.accent,
     marginTop: DIMENSIONS.MARGIN_LARGE,
   },
 
@@ -173,10 +163,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     height: CARD_H,
     borderRadius: R,
-    paddingHorizontal: DIMENSIONS.moderateScale(18),
-    // paddingVertical: DIMENSIONS.moderateScale(30),
+    paddingHorizontal: DIMENSIONS.moderateScale(20),
 
-    marginTop: DIMENSIONS.verticalScale(16),
+    marginTop: DIMENSIONS.verticalScale(18),
 
     // subtle border to match mock
     borderWidth: StyleSheet.hairlineWidth * 2,
@@ -186,12 +175,13 @@ const styles = StyleSheet.create({
     width: DIMENSIONS.moderateScale(80),
     height: DIMENSIONS.moderateScale(80),
     borderRadius: DIMENSIONS.moderateScale(10),
-    marginRight: DIMENSIONS.moderateScale(16),
+    marginRight: DIMENSIONS.moderateScale(18),
   },
   cardTitle: {
     flex: 1,
     fontSize: DIMENSIONS.FONT_SIZE_XLARGE,
-    fontWeight: '800',
-    color: '#111827',
+    fontWeight: '600',
+    fontFamily: 'CormorantGaramond-SemiBold',
+    color: COLORS.text,
   },
 });

@@ -15,6 +15,7 @@ import {SafeAreaView, useSafeAreaInsets} from 'react-native-safe-area-context';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import LinearGradient from 'react-native-linear-gradient';
 import {DIMENSIONS} from '@constants/dimensions';
+import {COLORS} from '@constants/colors';
 import {navigate} from '@utils/NavigationUtils';
 import {getOrCreateDeviceId} from '@utils/deviceId';
 import {useConfidenceLookupMutation} from '@store/api/confidenceApi';
@@ -57,58 +58,55 @@ export default function LookupScreen({navigation}) {
   ];
 
   const onPrimary = () => {
-    navigate('Main', {
-      screen: 'StepFlowScreen',
-      params: {
-        situationTitle: confidenceData?._situation_sc?.[0]?.name,
-        hero: {uri: ''},
-        initialIndex: 0,
-        audio: audioPath || confidenceData?.kit_audio,
-        audioCached: !!audioPath,
-        steps: [
-          {
-            key: 'mantra',
-            title: 'Mantra',
-            text: confidenceData?._mantra_sc?.[0]?.quote,
-            hero: confidenceData?._mantra_sc?.[0]?.mantra_step_image?.url,
-          },
-          {
-            key: 'body',
-            title: 'Body Reset',
-            text: confidenceData?._body_reset_sc?.[0]?.quote,
-            hero: confidenceData?._body_reset_sc?.[0]?.bodyreset_step_images
-              ?.url,
-          },
-          {
-            key: 'belief',
-            title: 'Grounding Belief',
-            text: confidenceData?._grounding_belief_sc?.[0]?.quote,
-            hero: confidenceData?._grounding_belief_sc?.[0]
-              ?.groundingbelief_step_image?.url,
-          },
-          {
-            key: 'reframe',
-            title: 'Mental Reframe',
-            text: confidenceData?._mental_reframe_sc?.[0]?.quote,
-            hero: confidenceData?._mental_reframe_sc?.[0]
-              ?.mentalreframe_step_image?.url,
-          },
-          {
-            key: 'ritual',
-            title: 'Ending Ritual',
-            text: confidenceData?._ending_ritual_sc?.[0]?.quote,
-            hero: confidenceData?._ending_ritual_sc?.[0]
-              ?.endingritual_step_image?.url,
-          },
-          {
-            key: 'bonus',
-            title: 'Bonus Tip',
-            text: confidenceData?._bonus_tip_sc?.[0]?.quote,
-            hero: confidenceData?._bonus_tip_sc?.[0]?.bonustip_step_image?.url,
-          },
-        ],
-        finishRoute: {name: 'HomeScreen'},
-      },
+    navigate('StepFlowScreen', {
+      situationTitle: confidenceData?._situation_sc?.[0]?.name,
+      hero: {uri: ''},
+      initialIndex: 0,
+      audio: audioPath || confidenceData?.kit_audio,
+      audioCached: !!audioPath,
+      steps: [
+        {
+          key: 'mantra',
+          title: 'Mantra',
+          text: confidenceData?._mantra_sc?.[0]?.quote,
+          hero: confidenceData?._mantra_sc?.[0]?.mantra_step_image?.url,
+        },
+        {
+          key: 'body',
+          title: 'Body Reset',
+          text: confidenceData?._body_reset_sc?.[0]?.quote,
+          hero: confidenceData?._body_reset_sc?.[0]?.bodyreset_step_images
+            ?.url,
+        },
+        {
+          key: 'belief',
+          title: 'Grounding Belief',
+          text: confidenceData?._grounding_belief_sc?.[0]?.quote,
+          hero: confidenceData?._grounding_belief_sc?.[0]
+            ?.groundingbelief_step_image?.url,
+        },
+        {
+          key: 'reframe',
+          title: 'Mental Reframe',
+          text: confidenceData?._mental_reframe_sc?.[0]?.quote,
+          hero: confidenceData?._mental_reframe_sc?.[0]
+            ?.mentalreframe_step_image?.url,
+        },
+        {
+          key: 'ritual',
+          title: 'Ending Ritual',
+          text: confidenceData?._ending_ritual_sc?.[0]?.quote,
+          hero: confidenceData?._ending_ritual_sc?.[0]
+            ?.endingritual_step_image?.url,
+        },
+        {
+          key: 'bonus',
+          title: 'Bonus Tip',
+          text: confidenceData?._bonus_tip_sc?.[0]?.quote,
+          hero: confidenceData?._bonus_tip_sc?.[0]?.bonustip_step_image?.url,
+        },
+      ],
+      finishRoute: {name: 'HomeScreen'},
     });
   };
 
@@ -228,7 +226,7 @@ export default function LookupScreen({navigation}) {
               onPress={() => navigation?.goBack?.()}
               style={styles.backBtn}
               hitSlop={12}>
-              <Ionicons name="chevron-back" size={22} color="#2E6C94" />
+              <Ionicons name="chevron-back" size={22} color={COLORS.accent} />
             </Pressable>
           </View>
         </ImageBackground>
@@ -248,7 +246,7 @@ export default function LookupScreen({navigation}) {
 
           <View style={{alignItems: 'center'}}>
             <Text
-              style={[styles.headline, {color: '#2B6AA8', fontWeight: '800'}]}>
+              style={[styles.headline, {color: COLORS.accentLight, fontWeight: '600'}]}>
               {confidenceData?.kit_name ? confidenceData.kit_name : ''}
             </Text>
           </View>
@@ -263,8 +261,8 @@ export default function LookupScreen({navigation}) {
               end={{x: 1, y: 1}}
               colors={
                 !showFullLoader
-                  ? ['#8EC6EA', '#234B67']
-                  : ['#C9D7E1', '#C9D7E1']
+                  ? [COLORS.gradientStart, COLORS.gradientEnd]
+                  : [COLORS.gradientDisabledStart, COLORS.gradientDisabledEnd]
               }
               style={styles.cta}>
               <>
@@ -310,7 +308,7 @@ const THUMB = DIMENSIONS.moderateScale(40);
 
 /* ---------- styles ---------- */
 const styles = StyleSheet.create({
-  safe: {flex: 1, backgroundColor: '#FFFFFF'},
+  safe: {flex: 1, backgroundColor: COLORS.background},
   heroWrap: {paddingHorizontal: DIMENSIONS.PADDING_HORIZONTAL},
   heroImage: {
     height: DIMENSIONS.verticalScale(220),
@@ -330,10 +328,11 @@ const styles = StyleSheet.create({
   },
   heroTextBox: {padding: DIMENSIONS.moderateScale(16)},
   heroTitle: {
-    color: 'black',
-    fontWeight: '800',
-    fontSize: DIMENSIONS.moderateScale(26),
-    lineHeight: DIMENSIONS.moderateScale(30),
+    color: COLORS.text,
+    fontWeight: '600',
+    fontFamily: 'CormorantGaramond-SemiBold',
+    fontSize: DIMENSIONS.moderateScale(28),
+    lineHeight: DIMENSIONS.moderateScale(34),
     textAlign: 'center',
   },
   cardScroll: {
@@ -344,7 +343,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   card: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: COLORS.background,
     borderTopLeftRadius: DIMENSIONS.moderateScale(18),
     borderTopRightRadius: DIMENSIONS.moderateScale(18),
     marginTop: -DIMENSIONS.verticalScale(12),
@@ -368,8 +367,8 @@ const styles = StyleSheet.create({
     width: Math.min(DIMENSIONS.SCREEN_WIDTH * 0.82, 360),
   },
   ctaText: {
-    color: '#FFFFFF',
-    fontWeight: '800',
+    color: COLORS.white,
+    fontWeight: '600',
     fontSize: DIMENSIONS.FONT_SIZE_XLARGE,
   },
   thumbIcon: {
@@ -417,7 +416,7 @@ const rowStyles = StyleSheet.create({
   },
   label: {
     fontSize: DIMENSIONS.FONT_SIZE_XLARGE,
-    color: '#1F2937',
-    fontWeight: '700',
+    color: COLORS.text,
+    fontWeight: '600',
   },
 });
