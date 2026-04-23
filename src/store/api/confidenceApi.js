@@ -1,8 +1,6 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
 
-import Config from 'react-native-config';
-
-const BASE_URL = Config.API_URL;
+const BASE_URL = process.env.API_URL;
 
 export const confidenceApi = createApi({
   reducerPath: 'confidenceApi',

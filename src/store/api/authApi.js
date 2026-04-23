@@ -1,8 +1,6 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
 
-import Config from 'react-native-config';
-
-const BASE_URL = Config.AUTH_API_URL;
+const BASE_URL = process.env.AUTH_API_URL;
 
 /**
  * Auth API Service
@@ -66,13 +64,13 @@ export const authApi = createApi({
     }),
     resendOTP: builder.mutation({
       query: email => ({
-        url: '/auth/resend-otp',
+        url: '/resend_otp_original',
         method: 'POST',
         body: {email},
       }),
     }),
     getUserProfile: builder.query({
-      query: () => '/auth/profile',
+      query: () => '/auth/me',
       providesTags: ['User'],
     }),
     getProfile: builder.mutation({
