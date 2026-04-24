@@ -1,5 +1,5 @@
 // src/features/intro/IntroScreen.jsx
-import React, {useCallback, useRef} from 'react';
+import React, { useCallback, useRef } from 'react';
 import {
   View,
   Text,
@@ -10,9 +10,9 @@ import {
   ScrollView,
   Platform,
 } from 'react-native';
-import {SafeAreaView, useSafeAreaInsets} from 'react-native-safe-area-context';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
-import Animated, {FadeInUp} from 'react-native-reanimated';
+import Animated, { FadeInUp } from 'react-native-reanimated';
 
 // import { useNavigation } from '@react-navigation/native';
 
@@ -20,15 +20,15 @@ import splashImg from '@assets/images/splash.png';
 import logoImg from '@assets/images/logo.png';
 
 import CustomButton from '@components/ui/CustomButton';
-import {COLORS} from '@constants/colors';
-import {DIMENSIONS} from '@constants/dimensions';
-import {STRINGS} from '@constants/strings';
-import {navigate} from '@utils/NavigationUtils';
-import {useGetStartedMutation} from '@store/api/confidenceApi';
-import {toFormData} from '@utils/commonFn';
-import {getOrCreateDeviceId} from '@utils/deviceId';
-import {useSelector} from 'react-redux';
-import {useFocusEffect} from '@react-navigation/native';
+import { COLORS } from '@constants/colors';
+import { DIMENSIONS } from '@constants/dimensions';
+import { STRINGS } from '@constants/strings';
+import { navigate } from '@utils/NavigationUtils';
+import { useGetStartedMutation } from '@store/api/confidenceApi';
+import { toFormData } from '@utils/commonFn';
+import { getOrCreateDeviceId } from '@utils/deviceId';
+import { useSelector } from 'react-redux';
+import { useFocusEffect } from '@react-navigation/native';
 import SystemNavigationBar from 'react-native-system-navigation-bar';
 
 /**
@@ -40,7 +40,7 @@ import SystemNavigationBar from 'react-native-system-navigation-bar';
  * - Routes to Home (if already auth'd) or Sign In based on state.
  */
 const IntroScreen = () => {
-  const {isAuthenticated} = useSelector(state => state.auth);
+  const { isAuthenticated } = useSelector(state => state.auth);
 
   // const navigation = useNavigation();
   const insets = useSafeAreaInsets();
@@ -48,24 +48,24 @@ const IntroScreen = () => {
   // Freeze the top inset ONCE so it won't change after minimize/resume
   const frozenTopInset = useRef(insets.top || 0).current;
 
-  const [getStarted, {isLoading}] = useGetStartedMutation();
+  const [getStarted, { isLoading }] = useGetStartedMutation();
 
   const handleGetStarted = async () => {
     // navigate('Auth', {screen: 'SignInScreen'});
     // navigate('Main', {screen: 'IntroScreen'});
 
     try {
-      const body = await toFormData({
-        device_id: await getOrCreateDeviceId(),
-        situation: '',
-        mood: '',
-        confidence_id: '',
-      });
+      // const body = await toFormData({
+      //   device_id: await getOrCreateDeviceId(),
+      //   situation: '',
+      //   mood: '',
+      //   confidence_id: '',
+      // });
 
-      await getStarted(body).unwrap();
+      // await getStarted(body).unwrap();
 
       if (isAuthenticated) navigate('UserBottomTab');
-      else navigate('Auth', {screen: 'SignInScreen'});
+      else navigate('Auth', { screen: 'SignInScreen' });
     } catch (error) {
       console.log('handleGetStarted', error);
     }
@@ -143,11 +143,11 @@ const IntroScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {flex: 1, backgroundColor: COLORS.black},
-  bg: {flex: 1, width: '100%', height: '100%'},
-  gradient: {flex: 1},
+  container: { flex: 1, backgroundColor: COLORS.black },
+  bg: { flex: 1, width: '100%', height: '100%' },
+  gradient: { flex: 1 },
 
-  scroll: {flex: 1}, // IMPORTANT: no flexGrow on contentContainer
+  scroll: { flex: 1 }, // IMPORTANT: no flexGrow on contentContainer
 
   column: {
     flex: 1,

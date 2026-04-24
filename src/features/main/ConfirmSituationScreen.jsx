@@ -1,25 +1,24 @@
 // src/features/situation/ConfirmSituationScreen.jsx
-import React from 'react';
-import {
-  View,
-  Text,
-  Image,
-  StyleSheet,
-  StatusBar,
-  Pressable,
-  Platform,
-  ScrollView,
-  TouchableOpacity,
-} from 'react-native';
-import {SafeAreaView, useSafeAreaInsets} from 'react-native-safe-area-context';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import LinearGradient from 'react-native-linear-gradient';
-import {DIMENSIONS} from '@constants/dimensions';
 import {COLORS} from '@constants/colors';
-import {navigate} from '@utils/NavigationUtils';
+import {DIMENSIONS} from '@constants/dimensions';
 import {useEditSituationMutation} from '@store/api/confidenceApi';
 import {getOrCreateDeviceId} from '@utils/deviceId';
-import {toFormData} from '@utils/commonFn';
+import {navigate} from '@utils/NavigationUtils';
+import React from 'react';
+import {
+  Image,
+  Platform,
+  Pressable,
+  ScrollView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
+import {SafeAreaView, useSafeAreaInsets} from 'react-native-safe-area-context';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 /**
  * Confirm Situation Screen
@@ -37,7 +36,7 @@ export default function ConfirmSituationScreen({navigation, route}) {
 
   const {
     title = 'Interview',
-    subtitle = "You\u2019re not here to impress.\nYou\u2019re here to connect.",
+    subtitle = 'You\u2019re not here to impress.\nYou\u2019re here to connect.',
     image = {
       uri: 'https://images.unsplash.com/photo-1521119989659-a83eee488004?q=80&w=800&auto=format&fit=crop',
     },
