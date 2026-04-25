@@ -17,9 +17,10 @@ import CurvedHeader from '@components/ui/CurvedHeader';
 import {DIMENSIONS} from '@constants/dimensions';
 import {COLORS} from '@constants/colors';
 import {SITUATIONS} from '@constants/situations';
-import {navigate} from '@utils/NavigationUtils';
+//import {navigate} from '@utils/NavigationUtils';
 import {useEditSituationMutation} from '@store/api/confidenceApi';
 import {getOrCreateDeviceId} from '@utils/deviceId';
+import {useNavigation} from '@react-navigation/native';
 
 /**
  * Home Screen
@@ -30,8 +31,9 @@ import {getOrCreateDeviceId} from '@utils/deviceId';
  * - API Integration: Calls `editSituation` when a user selects an item to prep the backend.
  * - Device ID: Sends the device ID with the API request for tracking.
  */
-export default function HomeScreen({navigation}) {
+export default function HomeScreen() {
   const insets = useSafeAreaInsets();
+  const {navigate} = useNavigation();
   const [editSituation, {isLoading}] = useEditSituationMutation();
 
   const frozenBottom = React.useRef(insets.bottom || 0).current;
@@ -69,7 +71,7 @@ export default function HomeScreen({navigation}) {
         edge="bottom"
         text={{
           title: "What's Your Moment?",
-          desc: "Choose the situation you\u2019re walking into, we\u2019ll build your custom boost from there.",
+          desc: 'Choose the situation you\u2019re walking into, we\u2019ll build your custom boost from there.',
         }}
       />
 
@@ -77,7 +79,7 @@ export default function HomeScreen({navigation}) {
         keyboardShouldPersistTaps="handled"
         contentContainerStyle={{
           paddingHorizontal: DIMENSIONS.PADDING_HORIZONTAL,
-          paddingBottom: frozenBottom + DIMENSIONS.verticalScale(24),
+          paddingBottom: 200,
         }}
         showsVerticalScrollIndicator={false}>
         <View style={{height: DIMENSIONS.verticalScale(10)}} />

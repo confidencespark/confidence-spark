@@ -1,28 +1,18 @@
 // UserBottomTab.jsx
-import React from 'react';
-import {StyleSheet} from 'react-native';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
-// import LinearGradient from 'react-native-linear-gradient'; // if you want gradient bg
-
-import {getFocusedRouteNameFromRoute} from '@react-navigation/native';
 import Icon from '@components/global/Icon'; // must forward the `color` prop!
-import {DIMENSIONS} from '@constants/dimensions';
-import {COLORS} from '@constants/colors';
-import HomeStackNavigator from '@navigation/HomeStackNavigator';
+import { COLORS } from '@constants/colors';
+import { DIMENSIONS } from '@constants/dimensions';
+import { STORAGE_KEYS } from '@constants/storageKeys';
+import HomeScreen from '@features/main/home/HomeScreen';
 import ProfileScreen from '@features/profile/ProfileScreen';
-import {navigate, resetAndNavigate} from '@utils/NavigationUtils';
-import {logout} from '@store/slices/authSlice';
-import {useDispatch} from 'react-redux';
-import Toast from 'react-native-toast-message';
-import UserIcon from '../../assets/images/user_icon.svg';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {STORAGE_KEYS} from '@constants/storageKeys';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { resetAndNavigate } from '@utils/NavigationUtils';
+import React from 'react';
+import { Platform } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const Tab = createBottomTabNavigator();
-
-const Empty = () => null; // used if you want Logout to be an action, not a screen
-
 /**
  * User Bottom Tab Navigator
  *
@@ -35,10 +25,8 @@ const Empty = () => null; // used if you want Logout to be an action, not a scre
  *   Redirects to the Auth flow if the user is not logged in.
  */
 export default function UserBottomTab() {
-  const dispatch = useDispatch();
 
-  const {bottom} = useSafeAreaInsets();
-  // const dispatch = useDispatch();
+  const { bottom } = useSafeAreaInsets();
 
   return (
     <Tab.Navigator
@@ -59,30 +47,31 @@ export default function UserBottomTab() {
         },
         tabBarStyle: {
           backgroundColor: COLORS.tabBar,
-          borderTopWidth: 0,
-          height: DIMENSIONS.verticalScale(72),
-          // paddingTop: DIMENSIONS.verticalScale(2),
-          paddingBottom: bottom + DIMENSIONS.verticalScale(10),
-          elevation: 8, // Android shadow
+          //  borderTopWidth: 0,
+          height: DIMENSIONS.verticalScale(Platform.OS === 'ios' ? 70 : 70),
+          paddingBottom: DIMENSIONS.verticalScale(Platform.OS === 'ios' ? 20 : 20),
+          paddingTop: DIMENSIONS.verticalScale(8),
+          position: 'absolute',
+          bottom: DIMENSIONS.verticalScale(20),
+          left: DIMENSIONS.scale(20),
+          right: DIMENSIONS.scale(20),
+          borderRadius: DIMENSIONS.verticalScale(40),
+          elevation: 10,
+          shadowColor: '#000',
+          shadowOffset: { width: 0, height: 5 },
+          shadowOpacity: 0.3,
+          shadowRadius: 10,
+          borderWidth: 1,
+          borderColor: 'rgba(255,255,255,0.05)',
+          marginHorizontal: DIMENSIONS.scale(20),
         },
-
-        // If you prefer a gradient bar:
-        // tabBarBackground: () => (
-        //   <LinearGradient
-        //     colors={['#7FB4D1', '#5E94B8']}
-        //     start={{x: 0, y: 0}} end={{x: 1, y: 1}}
-        //     style={StyleSheet.absoluteFill}
-        //   />
-        // ),
       }}>
       <Tab.Screen
         name="Home"
-        component={HomeStackNavigator}
-        options={({route}) => {
-          const routeName = getFocusedRouteNameFromRoute(route) ?? 'HomeScreen';
-          const hideOnScreens = ['StepFlowScreen'];
+        component={HomeScreen}
+        options={({ route }) => {
           return {
-            tabBarIcon: ({color, focused, size}) => (
+            tabBarIcon: ({ color, focused, size }) => (
               <Icon
                 name={focused ? 'home' : 'home-outline'}
                 iconFamily="Ionicons"
@@ -91,42 +80,16 @@ export default function UserBottomTab() {
               />
             ),
             tabBarLabel: 'Home',
-            tabBarStyle: hideOnScreens.includes(routeName)
-              ? {display: 'none'}
-              : {
-                  backgroundColor: COLORS.tabBar,
-                  borderTopWidth: 0,
-                  height: DIMENSIONS.verticalScale(72),
-                  paddingBottom: bottom + DIMENSIONS.verticalScale(10),
-                  elevation: 8,
-                },
           };
         }}
       />
-
-      {/* Option A: Logout is just a screen */}
-      {/* <Tab.Screen
-        name="Logout"
-        component={PanScreen}
-        options={{
-          tabBarIcon: ({color}) => (
-            <Icon
-              name="logout-variant"
-              iconFamily="MaterialCommunityIcons"
-              size={26}
-              color={color}
-            />
-          ),
-          tabBarLabel: 'Logout',
-        }}
-      /> */}
 
       {/* Option B (like many apps): Logout triggers an action, no screen */}
       <Tab.Screen
         name="Profile"
         component={ProfileScreen}
         options={{
-          tabBarIcon: ({color}) => (
+          tabBarIcon: ({ color }) => (
             <Icon
               name="person-sharp"
               iconFamily="Ionicons"
@@ -136,7 +99,7 @@ export default function UserBottomTab() {
           ),
           tabBarLabel: 'Profile',
         }}
-        listeners={({navigation}) => ({
+        listeners={({ navigation }) => ({
           tabPress: e => {
             // Always stop the default tab switch first
             e.preventDefault();
@@ -149,18 +112,16 @@ export default function UserBottomTab() {
                   navigation.jumpTo('Profile'); // use jumpTo for tab navigators
                 } else {
                   // Send to auth flow
-                  resetAndNavigate('Auth', {screen: 'SignInScreen'});
+                  resetAndNavigate('Auth', { screen: 'SignInScreen' });
                 }
               })
               .catch(() => {
                 // On any storage error, be safe and send to auth
-                resetAndNavigate('Auth', {screen: 'SignInScreen'});
+                resetAndNavigate('Auth', { screen: 'SignInScreen' });
               });
           },
         })}
       />
     </Tab.Navigator>
   );
-}
-
-const styles = StyleSheet.create({});
+} 

@@ -54,8 +54,8 @@ export const COLORS = {
 
   // ── Tab bar ──
   tabBar: '#73A9C9',
-  tabActive: '#0E3753',
-  tabInactive: '#FFFFFF',
+  tabActive: '#ffffff',
+  tabInactive: '#0E3753',
 
   // ── Semantic ──
   white: '#FFFFFF',

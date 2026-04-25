@@ -1,19 +1,25 @@
-import {FC, useEffect} from 'react';
-import {useSelector, useDispatch} from 'react-redux';
+import { FC, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import IntroScreen from '@features/intro/IntroScreen';
 import SplashScreen from '@features/splash/SplashScreen';
 import UserBottomTab from '@features/tabs/UserBottomTab';
-import {NavigationContainer} from '@react-navigation/native';
-import {navigationRef} from '@utils/NavigationUtils';
+import { NavigationContainer } from '@react-navigation/native';
+import { navigationRef } from '@utils/NavigationUtils';
 
-import {setToken} from '../store/slices/authSlice';
+import { setToken } from '../store/slices/authSlice';
 
 import AuthNavigator from './AuthNavigator';
-import {STORAGE_KEYS} from '@constants/storageKeys';
-import {hideNavBar} from '../utils/androidNavBar';
+import { STORAGE_KEYS } from '@constants/storageKeys';
+import { hideNavBar } from '../utils/androidNavBar';
+import HomeScreen from '@features/main/home/HomeScreen';
+import MoodSelectScreen from '@features/main/MoodSelectScreen';
+import ConfirmSituationScreen from '@features/main/ConfirmSituationScreen';
+import ConfirmVibeScreen from '@features/main/ConfirmVibeScreen';
+import LookupScreen from '@features/main/LookupScreen';
+import StepFlowScreen from '@features/main/StepFlowScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -62,6 +68,7 @@ const Navigation: FC = () => {
         initialRouteName="SplashScreen"
         screenOptions={{
           headerShown: false,
+          gestureEnabled: true,
         }}>
         <Stack.Screen name="SplashScreen" component={SplashScreen} />
         <Stack.Screen
@@ -80,6 +87,41 @@ const Navigation: FC = () => {
           }}
           name="UserBottomTab"
           component={UserBottomTab}
+        />
+        <Stack.Screen
+          options={{
+            animation: 'fade',
+          }}
+          name="MoodSelectScreen"
+          component={MoodSelectScreen}
+        />
+        <Stack.Screen
+          options={{
+            animation: 'fade',
+          }}
+          name="ConfirmSituationScreen"
+          component={ConfirmSituationScreen}
+        />
+        <Stack.Screen
+          options={{
+            animation: 'fade',
+          }}
+          name="ConfirmVibeScreen"
+          component={ConfirmVibeScreen}
+        />
+        <Stack.Screen
+          options={{
+            animation: 'fade',
+          }}
+          name="LookupScreen"
+          component={LookupScreen}
+        />
+        <Stack.Screen
+          options={{
+            animation: 'fade',
+          }}
+          name="StepFlowScreen"
+          component={StepFlowScreen}
         />
       </Stack.Navigator>
     </NavigationContainer>

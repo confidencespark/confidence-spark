@@ -123,9 +123,9 @@ export default function ProfileScreen() {
         barStyle="dark-content"
       />
       <View style={styles.container}>
-        <View style={styles.header}>
+        {/* <View style={styles.header}>
           <Text style={styles.headerTitle}>Profile</Text>
-        </View>
+        </View> */}
 
         {/* avatar */}
         <View style={styles.avatar}>
