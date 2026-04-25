@@ -55,14 +55,14 @@ const IntroScreen = () => {
     // navigate('Main', {screen: 'IntroScreen'});
 
     try {
-      // const body = await toFormData({
-      //   device_id: await getOrCreateDeviceId(),
-      //   situation: '',
-      //   mood: '',
-      //   confidence_id: '',
-      // });
+      const body = await toFormData({
+        device_id: await getOrCreateDeviceId(),
+        situation: '',
+        mood: '',
+        confidence_id: '',
+      });
 
-      // await getStarted(body).unwrap();
+      await getStarted(body).unwrap();
 
       if (isAuthenticated) navigate('UserBottomTab');
       else navigate('Auth', { screen: 'SignInScreen' });

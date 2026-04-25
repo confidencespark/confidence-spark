@@ -1,4 +1,10 @@
 {
   "name": "ConfidenceCatalyst",
-  "displayName": "Confidence Spark"
+  "displayName": "Confidence Spark",
+  "slug": "confidencespark-app",
+  "extra": {
+    "eas": {
+      "projectId": "93c5ddf9-0d54-432f-b58b-ddb50d25645e"
+    }
+  }
 }
