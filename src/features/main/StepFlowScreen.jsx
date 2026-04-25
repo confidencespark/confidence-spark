@@ -245,7 +245,7 @@ export default function StepFlowScreen({navigation, route}) {
   const onNext = async () => {
     if (isLast) {
       await stopAndRelease();
-      if (finishRoute?.name) navigation.popToTop();
+      if (finishRoute?.name) navigation.replace('UserBottomTab');
       else navigation.goBack();
       return;
     }
